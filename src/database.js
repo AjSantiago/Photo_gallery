@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose
-	.connect('mongodb://localhost/gallery_photos', {
+	.connect(process.env.MONGODB_URI, {
 		useNewUrlParser: true,
 	})
 	.then((db) => console.log('DB is connected'))
