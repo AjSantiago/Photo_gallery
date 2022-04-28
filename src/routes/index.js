@@ -36,7 +36,14 @@ router.post('/images/add', async (req, res) => {
 	await newPhoto.save();
 	await fs.unlink(req.file.path);
 
-	res.send('Received');
+	res.redirect('/');
+});
+
+router.get('/images/delete/:photo_id', async (req, res) => {
+	const { photo_id } = req.params;
+	const photo = await Photo.findByIdAndDelete(photo_id);
+	const result = await cloudinary.v2.uploader.destroy(photo.public_id);
+	res.redirect('/images/add');
 });
 
 module.exports = router;
